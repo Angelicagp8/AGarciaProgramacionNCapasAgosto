@@ -14,5 +14,6 @@ namespace ML
         public string ApellidoMaterno { get; set; }
         public string Sexo { get; set; }
         public string Email { get; set; }
+       // public string FechaNacimiento { get; set; }
     }
 }

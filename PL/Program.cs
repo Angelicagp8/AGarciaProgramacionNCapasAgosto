@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PL
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            PL.Alumno.Add();
+            PL.Alumno.Add ();
             Console.ReadKey();
         }
     }
