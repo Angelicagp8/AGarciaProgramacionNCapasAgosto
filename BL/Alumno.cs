@@ -182,5 +182,64 @@ namespace BL
             }
             return result;
         }
+
+        public static ML.Result GetAll()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(SqlConnection context = new SqlConnection(DL.Conexion.Get()))
+                {
+                    string query = "AlumnoGetAll";
+                    using(SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = context;
+                        cmd.CommandText = query;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        DataTable tableAlumno = new DataTable();
+
+                        SqlDataAdapter da = new SqlDataAdapter(cmd); //Puente entre DataSet y BD 
+
+                        da.Fill(tableAlumno); //llenar la tabla
+
+                        if(tableAlumno.Rows.Count > 0)
+                        {
+                            result.Objects = new List<object>();
+
+                            foreach(DataRow row in tableAlumno.Rows)
+                            {
+                                ML.Alumno alumno = new ML.Alumno();
+
+                                alumno.IdAlumno = int.Parse(row[0].ToString());
+                                alumno.Nombre = row[1].ToString();
+                                alumno.ApellidoPaterno = row[2].ToString();
+                                alumno.ApellidoMaterno = row[3].ToString();
+                                alumno.Sexo = row[4].ToString();
+                                alumno.Email = row[5].ToString();
+
+                                result.Objects.Add(alumno);
+                                //result.Object = alumno
+                            }
+                            result.Correct = true;
+
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
     }
 }

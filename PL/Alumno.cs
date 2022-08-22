@@ -73,5 +73,29 @@ namespace PL
                 Console.WriteLine("Ocurrio un error al actualizar");
             }
         }
+
+        public static void GetAll()
+        {
+            ML.Result result = BL.Alumno.GetAll();
+            
+            if(result.Correct)
+            {
+                foreach(ML.Alumno alumno in result.Objects)
+                {
+                    Console.WriteLine("IdAlumno: " + alumno.IdAlumno);
+                    Console.WriteLine("Nombre: " + alumno.Nombre);
+                    Console.WriteLine("ApellidoPaterno" + alumno.ApellidoPaterno);
+                    Console.WriteLine("ApellidoMaterno: " + alumno.ApellidoMaterno);
+                    Console.WriteLine("Sexo" + alumno.Sexo);
+                    Console.WriteLine("Email" + alumno.Email);
+                    Console.WriteLine("-------------------------------");
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio un error al realizar la consulta");
+            }
+        }
     }
 }
