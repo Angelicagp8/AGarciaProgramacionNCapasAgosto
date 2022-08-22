@@ -97,5 +97,28 @@ namespace PL
                 Console.WriteLine("Ocurrio un error al realizar la consulta");
             }
         }
+
+        public static void GetById()
+        {
+            Console.WriteLine("Ingrese el Id a consultar");
+            ML.Result result = BL.Alumno.GetById(int.Parse(Console.ReadLine()));
+
+            if(result.Correct)
+            {
+                ML.Alumno alumno = ((ML.Alumno)result.Object); //UNBOXING : Proceso de convertir un tipo de objeto a un tipo de dato
+                Console.WriteLine("IdAlumno: " + alumno.IdAlumno);
+                Console.WriteLine("Nombre: " + alumno.Nombre);
+                Console.WriteLine("ApellidoPaterno" + alumno.ApellidoPaterno);
+                Console.WriteLine("ApellidoMaterno: " + alumno.ApellidoMaterno);
+                Console.WriteLine("Sexo" + alumno.Sexo);
+                Console.WriteLine("Email" + alumno.Email);
+                Console.WriteLine("-------------------------------");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio un error al realizar la consulta");
+            }
+        }
     }
 }
