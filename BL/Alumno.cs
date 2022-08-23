@@ -298,5 +298,31 @@ namespace BL
 
             return result;
         }
+
+        public static ML.Result AddEF(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+            try
+            { 
+                using(DL_EF.AGarciaGenAgostoEntities context = new DL_EF.AGarciaGenAgostoEntities())
+                {
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Sexo, alumno.Email, alumno.Semestre.IdSemestre);
+                    if(query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage=ex.Message;
+            }
+            return result;
+        }
     }
 }

@@ -27,8 +27,14 @@ namespace PL
             Console.WriteLine("Ingrese el email");
             alumno.Email = Console.ReadLine();
 
+            alumno.Semestre = new ML.Semestre(); //Instanciamos la llave foranea
+
+            Console.WriteLine("Ingrese el Id del semestre");
+            alumno.Semestre.IdSemestre = int.Parse(Console.ReadLine());
+
             //ML.Result result = BL.Alumno.Add(alumno); 
-            ML.Result result = BL.Alumno.AddSP(alumno);
+            //ML.Result result = BL.Alumno.AddSP(alumno);
+            ML.Result result = BL.Alumno.AddEF(alumno);
 
             if(result.Correct)
             {

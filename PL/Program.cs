@@ -10,7 +10,7 @@ namespace PL
     {
         static void Main(string[] args)
         {
-            PL.Alumno.GetById ();
+            PL.Alumno.Add ();
             Console.ReadKey();
         }
     }
