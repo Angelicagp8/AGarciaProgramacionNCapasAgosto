@@ -34,7 +34,8 @@ namespace PL
 
             //ML.Result result = BL.Alumno.Add(alumno); 
             //ML.Result result = BL.Alumno.AddSP(alumno);
-            ML.Result result = BL.Alumno.AddEF(alumno);
+            //ML.Result result = BL.Alumno.AddEF(alumno);
+            ML.Result result = BL.Alumno.AddLinq(alumno);
 
             if(result.Correct)
             {
@@ -82,7 +83,9 @@ namespace PL
 
         public static void GetAll()
         {
-            ML.Result result = BL.Alumno.GetAll();
+            //ML.Result result = BL.Alumno.GetAll();
+            //ML.Result result = BL.Alumno.GetAllEF();
+            ML.Result result = BL.Alumno.GetAllLinq();
             
             if(result.Correct)
             {
@@ -94,6 +97,7 @@ namespace PL
                     Console.WriteLine("ApellidoMaterno: " + alumno.ApellidoMaterno);
                     Console.WriteLine("Sexo" + alumno.Sexo);
                     Console.WriteLine("Email" + alumno.Email);
+                    Console.WriteLine("IdSemestre " + alumno.Semestre.IdSemestre);
                     Console.WriteLine("-------------------------------");
                     Console.WriteLine();
                 }

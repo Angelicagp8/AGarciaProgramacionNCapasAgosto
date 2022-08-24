@@ -19,5 +19,6 @@ namespace DL_EF
         public string ApellidoMaterno { get; set; }
         public string Sexo { get; set; }
         public string Email { get; set; }
+        public Nullable<int> IdSemestre { get; set; }
     }
 }

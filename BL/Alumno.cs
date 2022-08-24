@@ -306,7 +306,7 @@ namespace BL
             { 
                 using(DL_EF.AGarciaGenAgostoEntities context = new DL_EF.AGarciaGenAgostoEntities())
                 {
-                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Sexo, alumno.Email, alumno.Semestre.IdSemestre);
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Sexo, alumno.Email,alumno.Semestre.IdSemestre);
                     if(query > 0)
                     {
                         result.Correct = true;
@@ -321,6 +321,132 @@ namespace BL
             {
                 result.Correct = false;
                 result.ErrorMessage=ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result GetAllEF()
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenAgostoEntities context = new DL_EF.AGarciaGenAgostoEntities())
+                {
+                    var query = context.AlumnoGetAll().ToList();
+
+                    result.Objects = new List<object>();
+                    
+                    if(query != null)
+                    {
+                        foreach(var obj in query)
+                        {
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = obj.IdAlumno;
+                            alumno.Nombre = obj.Nombre;
+                            alumno.ApellidoPaterno = obj.ApellidoPaterno;
+                            alumno.ApellidoMaterno = obj.ApellidoMaterno;
+                            alumno.Sexo = obj.Sexo;
+                            alumno.Email = obj.Email;
+                            alumno.Semestre = new ML.Semestre(); //INSTANCIA 
+                            alumno.Semestre.IdSemestre = obj.IdSemestre.Value; //VALUE porque es un valor opcional 
+
+                            result.Objects.Add(alumno);
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct=false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result AddLinq(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenAgostoEntities context = new DL_EF.AGarciaGenAgostoEntities())
+                {
+                    DL_EF.Alumno alumnoLinq = new DL_EF.Alumno();
+
+                    alumnoLinq.Nombre = alumno.Nombre;
+                    alumnoLinq.ApellidoPaterno = alumno.ApellidoPaterno;
+                    alumnoLinq.ApellidoMaterno = alumno.ApellidoMaterno;
+                    alumnoLinq.Sexo = alumno.Sexo;
+                    alumnoLinq.Email = alumno.Email;
+                    alumnoLinq.IdSemestre = alumno.Semestre.IdSemestre;
+
+                    if(alumnoLinq != null)
+                    {
+                        context.Alumnoes.Add(alumnoLinq);
+                        context.SaveChanges();
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result GetAllLinq()
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenAgostoEntities context = new DL_EF.AGarciaGenAgostoEntities())
+                {
+                    var alumnos = (from alumnoLINQ in context.Alumnoes
+                                  select alumnoLINQ ).ToList();
+
+                    if(alumnos != null)
+                    {
+                        result.Objects = new List<object>();
+                        foreach( var objAlumno in alumnos)
+                        {
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = objAlumno.IdAlumno;
+                            alumno.Nombre = objAlumno.Nombre;
+                            alumno.ApellidoPaterno = objAlumno.ApellidoPaterno;
+                            alumno.ApellidoMaterno = objAlumno.ApellidoMaterno;
+                            alumno.Sexo = objAlumno.Sexo;
+                            alumno.Email = objAlumno.Email;
+
+                            alumno.Semestre = new ML.Semestre();
+                            alumno.Semestre.IdSemestre = objAlumno.IdSemestre.Value;
+
+                            result.Objects.Add(alumno);
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+                    
             }
             return result;
         }
