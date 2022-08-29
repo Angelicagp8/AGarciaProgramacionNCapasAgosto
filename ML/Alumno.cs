@@ -16,5 +16,6 @@ namespace ML
         public string Email { get; set; }
         // public string FechaNacimiento { get; set; }
         public ML.Semestre Semestre { get; set; } //Propiedades de navegación // Llaves foraneas
+        public List<object> Alumnos { get; set; }
     }
 }
